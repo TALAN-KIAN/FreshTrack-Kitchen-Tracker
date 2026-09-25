@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="4.2">
+    <attributes>
+        <attribute name="name" value="QUARTER 1 - AA (Talan)"/>
+        <attribute name="authors" value="SETH"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2026-09-25 10:58:21 pm"/>
+        <attribute name="created" value="U0VUSDtJVC1TRVRIVEFMQU47MjAyNi0wOS0yNTswODo1ODo0MSBwbTsyNTQ2"/>
+        <attribute name="edited" value="U0VUSDtJVC1TRVRIVEFMQU47MjAyNi0wOS0yNTsxMDo1ODoyMSBwbTsxOzI2NDU="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="choice" type="Integer" array="False" size=""/>
+            <declare name="itemCount" type="Integer" array="False" size=""/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <declare name="daysUntilExpiry" type="Integer" array="False" size=""/>
+            <declare name="status" type="String" array="False" size=""/>
+            <declare name="itemNames" type="String" array="True" size="100"/>
+            <declare name="quantities" type="Integer" array="True" size="100"/>
+            <declare name="expiryDays" type="Integer" array="True" size="100"/>
+            <declare name="categories" type="String" array="True" size="100"/>
+            <assign variable="itemCount" expression="0"/>
+            <assign variable="choice" expression="0"/>
+            <while expression="choice != 3">
+                <output expression="&quot;1) Add Item 2) View Dashboard 3) Exit&quot;" newline="True"/>
+                <input variable="choice"/>
+                <if expression="choice == 1">
+                    <then>
+                        <output expression="&quot;Enter Item Name: &quot;" newline="True"/>
+                        <input variable="itemNames[itemCount]"/>
+                        <output expression="&quot;Enter Expiry Days: &quot;" newline="True"/>
+                        <input variable="expiryDays[itemCount]"/>
+                        <output expression="&quot;Enter Quantity: &quot;" newline="True"/>
+                        <input variable="quantities[itemCount]"/>
+                        <output expression="&quot;Enter Category (Fruits, Veggies, Dairy, Meat, Condiments/Sauces, Eggs): &quot;" newline="True"/>
+                        <input variable="categories[itemCount]"/>
+                        <assign variable="itemCount" expression="itemCount + 1"/>
+                        <output expression="&quot;Item successfully added!&quot;" newline="True"/>
+                    </then>
+                    <else>
+                        <if expression="choice == 2">
+                            <then>
+                                <if expression="itemCount == 0">
+                                    <then>
+                                        <output expression="&quot;Inventory is Empty&quot;" newline="True"/>
+                                    </then>
+                                    <else>
+                                        <for variable="i" start="0" end="itemCount - 1" direction="inc" step="1">
+                                            <if expression="expiryDays[i] &lt; 0">
+                                                <then>
+                                                    <assign variable="status" expression="&quot;EXPIRED (Red&quot;"/>
+                                                </then>
+                                                <else>
+                                                    <if expression="expiryDays[i] &lt;= 3">
+                                                        <then>
+                                                            <assign variable="status" expression="&quot;EXPIRING SOON (Yellow)&quot;"/>
+                                                            <if expression="categories[i] == &quot;Meat&quot; or categories[i] == &quot;Veggies&quot;">
+                                                                <then>
+                                                                    <output expression="&quot;Recipe Tip: Make a quick stir-fry, stew, or soup!&quot;" newline="True"/>
+                                                                </then>
+                                                                <else>
+                                                                    <if expression="categories[i] == &quot;Eggs&quot; or categories[i] == &quot;Dairy&quot;">
+                                                                        <then>
+                                                                            <output expression="&quot;Recipe Tip: Whip up an omelet, frittata, or breakfast bake!&quot;" newline="True"/>
+                                                                        </then>
+                                                                        <else>
+                                                                            <if expression="categories[i] == &quot;Condiments or sauces&quot; or categories[i] == &quot;Condiments&quot;">
+                                                                                <then>
+                                                                                    <output expression="&quot;Recipe Tip: Use as a marinade, glaze, or dipping sauce today!&quot;" newline="True"/>
+                                                                                </then>
+                                                                                <else>
+                                                                                    <if expression="categories[i] == &quot;Fruits&quot;">
+                                                                                        <then>
+                                                                                            <output expression="&quot;Recipe Tip: Blend into a smoothie, mix into yogurt, or bake into a dessert!&quot;" newline="True"/>
+                                                                                        </then>
+                                                                                        <else>
+                                                                                            <output expression="&quot;Recipe Tip: Use as a quick topping, marinade, or snack today!&quot;" newline="True"/>
+                                                                                        </else>
+                                                                                    </if>
+                                                                                </else>
+                                                                            </if>
+                                                                        </else>
+                                                                    </if>
+                                                                </else>
+                                                            </if>
+                                                        </then>
+                                                        <else>
+                                                            <assign variable="status" expression="&quot;FRESH (Green)&quot;"/>
+                                                        </else>
+                                                    </if>
+                                                    <output expression="itemNames[i] &amp; &quot; | Qty: &quot; &amp; quantities[i] &amp; &quot; | Category: &quot; &amp; categories[i] &amp; &quot; | Status: &quot; &amp; status" newline="True"/>
+                                                </else>
+                                            </if>
+                                        </for>
+                                    </else>
+                                </if>
+                            </then>
+                            <else/>
+                        </if>
+                    </else>
+                </if>
+            </while>
+        </body>
+    </function>
+</flowgorithm>
